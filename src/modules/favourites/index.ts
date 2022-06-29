@@ -1,0 +1,1 @@
+export { typeFavourites } from './schemas';

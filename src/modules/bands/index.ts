@@ -1,0 +1,1 @@
+export { typeBands } from './schemas';

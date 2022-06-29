@@ -1,0 +1,1 @@
+export { typeAlbums } from './schemas';

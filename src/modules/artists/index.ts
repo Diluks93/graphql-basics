@@ -1,0 +1,1 @@
+export { typeArtists } from './schemas';
