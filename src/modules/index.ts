@@ -1,11 +1,11 @@
 import { gql } from 'apollo-server';
-import { typeArtists } from './artists';
-import { typeBands } from './bands';
-import { typeGenres } from './genres';
-import { typeTracks } from './tracks';
-import { typeUsers } from './users';
+import { resolversArtists, typeArtists } from './artists';
+import { resolversBands, typeBands } from './bands';
+import { typeGenres, resolversGenre } from './genres';
+import { resolversTracks, typeTracks } from './tracks';
+import { typeUsers, resolversUser } from './users';
 import { typeFavourites } from './favourites';
-import { typeAlbums } from './albums';
+import { typeAlbums, resolversAlbum } from './albums';
 
 export const schema = gql`
   ${typeArtists}
@@ -16,3 +16,13 @@ export const schema = gql`
   ${typeFavourites}
   ${typeAlbums}
 `;
+export { GenreAPI } from './genres';
+export { AlbumAPI } from './albums';
+export { ArtistAPI } from './artists';
+export { BandsAPI } from './bands';
+export { TrackAPI } from './tracks';
+export { UserAPI } from './users';
+
+export const resolver = [
+  resolversGenre, resolversAlbum, resolversArtists, resolversBands, resolversTracks, resolversUser,
+];

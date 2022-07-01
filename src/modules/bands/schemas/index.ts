@@ -16,7 +16,7 @@ export const typeBands = gql`
     years: String
   }
 
-  type Query {
+  extend type Query {
     bands(limit: Int, offset: Int): [Band]
     band(id: ID!): Band
   }

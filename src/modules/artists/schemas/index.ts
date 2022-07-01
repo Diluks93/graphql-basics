@@ -13,12 +13,12 @@ export const typeArtists = gql`
     instruments: String
   }
 
-  type Query {
+  extend type Query {
     artists(limit: Int, offset: Int): [Artist]
     artist(id: ID!): Artist
   }
 
-  type Mutation {
+  extend type Mutation {
     createArtist(firstName: String, secondName: String, middleName: String, birthDate: String, birthPlace: String, country: String, bands: [ID], instruments: String): Artist
   }
 `;

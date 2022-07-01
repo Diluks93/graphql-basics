@@ -18,6 +18,11 @@
         "import/no-unresolved": "off",
         "import/extensions": "off",
         "import/prefer-default-export": "off",
-        "linebreak-style": "off"
+        "linebreak-style": "off",
+        "arrow-body-style": "off",
+        "consistent-return": "off",
+        "no-return-await": "off",
+        "no-underscore-dangle": "off",
+        "import/no-extraneous-dependencies": "off"
     }
 }

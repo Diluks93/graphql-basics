@@ -12,7 +12,7 @@ export const typeAlbums = gql`
     image: String
   }
 
-  type Query {
+  extend type Query {
     albums(limit: Int, offset: Int): [Album]
     album(id: ID!): Album
   }

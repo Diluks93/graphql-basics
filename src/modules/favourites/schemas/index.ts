@@ -12,7 +12,7 @@ export const typeFavourites = gql`
     tracks: [ID]
   }
 
-  type Query {
+  extend type Query {
     favourites(id: ID!): [Favorite]
   }
 `;

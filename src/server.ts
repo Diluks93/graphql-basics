@@ -1,29 +1,42 @@
 import 'dotenv/config';
-import { ApolloServer/*,  AuthenticationError */ } from 'apollo-server';
+import { ApolloServer, AuthenticationError } from 'apollo-server';
+import axios from 'axios';
 import { EOL } from 'node:os';
-import { schema } from './modules';
 
-const startApolloServer = async (typeDefs: typeof schema): Promise<void>/* , resolvers */ => {
+import {
+  resolver, schema, GenreAPI, AlbumAPI, ArtistAPI, BandsAPI, TrackAPI, UserAPI,
+} from './modules';
+
+const startApolloServer = async (typeDefs: typeof schema, resolvers: any): Promise<void> => {
   const PORT = process.env.PORT || 4000;
   const server = new ApolloServer({
     typeDefs,
-    /* resolvers, */
+    resolvers,
     csrfPrevention: true,
     cache: 'bounded',
-    /* context: ({ req }) => {
-      // get the user token from the headers
+    context: async ({ req }) => {
       const token = req.headers.authorization || '';
+      const userId = token.split(' ')[1]; // get the user name after 'Bearer '
+      if (userId) {
+        const { data } = await axios
+          .get(`${process.env.USERS}/${userId}`)
+          .catch((error) => {
+            throw new AuthenticationError(error.message);
+          });
 
-      // try to retrieve a user with the token
-      const user = token;
-
-      // optionally block the user
-      // we could also check user roles/permissions here
-      if (!user) throw new AuthenticationError('you must be logged in');
-
-      // add the user to the context
-      return { user };
-    }, */
+        return { userId: data.id, userRole: data.role };
+      }
+    },
+    dataSources: () => {
+      return {
+        genreAPI: new GenreAPI(),
+        albumAPI: new AlbumAPI(),
+        artistAPI: new ArtistAPI(),
+        bandAPI: new BandsAPI(),
+        trackAPI: new TrackAPI(),
+        userAPI: new UserAPI(),
+      };
+    },
   });
   const { url } = await server.listen(PORT);
   process.stdout.write(`
@@ -33,4 +46,4 @@ const startApolloServer = async (typeDefs: typeof schema): Promise<void>/* , res
   `);
 };
 
-startApolloServer(schema);
+startApolloServer(schema, resolver);
