@@ -1,6 +1,5 @@
 import 'dotenv/config';
-import { ApolloServer, AuthenticationError } from 'apollo-server';
-import axios from 'axios';
+import { ApolloServer } from 'apollo-server';
 import { EOL } from 'node:os';
 
 import {
@@ -14,19 +13,6 @@ const startApolloServer = async (typeDefs: typeof schema, resolvers: any): Promi
     resolvers,
     csrfPrevention: true,
     cache: 'bounded',
-    context: async ({ req }) => {
-      const token = req.headers.authorization || '';
-      const userId = token.split(' ')[1]; // get the user name after 'Bearer '
-      if (userId) {
-        const { data } = await axios
-          .get(`${process.env.USERS}/${userId}`)
-          .catch((error) => {
-            throw new AuthenticationError(error.message);
-          });
-
-        return { userId: data.id, userRole: data.role };
-      }
-    },
     dataSources: () => {
       return {
         genreAPI: new GenreAPI(),
@@ -35,6 +21,11 @@ const startApolloServer = async (typeDefs: typeof schema, resolvers: any): Promi
         bandAPI: new BandsAPI(),
         trackAPI: new TrackAPI(),
         userAPI: new UserAPI(),
+      };
+    },
+    context: ({ req }) => {
+      return {
+        token: req.headers.authorization,
       };
     },
   });

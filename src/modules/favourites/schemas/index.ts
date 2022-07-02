@@ -6,10 +6,10 @@ export const typeFavourites = gql`
   type Favourites {
     id: ID!
     userId: ID!
-    bands: [ID]
-    genres: [ID]
-    artists: [ID]
-    tracks: [ID]
+    bands: [Band]
+    genres: [Genre]
+    artists: [Artist]
+    tracks: [Track]
   }
 
   extend type Query {

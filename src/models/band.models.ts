@@ -6,6 +6,7 @@ interface Member {
 
 export interface Band {
   _id: string;
+  id?: string;
   name: string;
   origin: string;
   membersId: Member[];

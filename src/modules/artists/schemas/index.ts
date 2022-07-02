@@ -1,16 +1,29 @@
 import { gql } from 'apollo-server';
 
 export const typeArtists = gql`
+  scalar Date
+
+  input ArtistInput {
+    firstName: String!
+    secondName: String!
+    middleName: String
+    birthDate: Date
+    birthPlace: String
+    country: String!
+    bands: [BandInput]
+    instruments: String
+  }
+
   type Artist {
     id: ID!
-    firstName: String
-    secondName: String
+    firstName: String!
+    secondName: String!
     middleName: String
-    birthDate: String
+    birthDate: Date
     birthPlace: String
-    country: String
-    bands: [ID]
-    instruments: String
+    country: String!
+    bands: [Band]
+    instruments: [String]
   }
 
   extend type Query {
@@ -19,6 +32,8 @@ export const typeArtists = gql`
   }
 
   extend type Mutation {
-    createArtist(firstName: String, secondName: String, middleName: String, birthDate: String, birthPlace: String, country: String, bands: [ID], instruments: String): Artist
+    createArtist(firstName: String!, secondName: String!, middleName: String, birthDate: Date, birthPlace: String, country: String!, bands: [BandInput], instruments: [String]): Artist
+    updateArtist(id: ID!, firstName: String!, secondName: String!, middleName: String, birthDate: Date, birthPlace: String, country: String!, bands: [BandInput], instruments: [String]): Artist
+    deleteArtist(id: ID!): Delete
   }
 `;

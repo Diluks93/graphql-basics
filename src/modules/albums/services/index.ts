@@ -1,11 +1,16 @@
 import 'dotenv/config';
-import { RESTDataSource } from 'apollo-datasource-rest';
+import { RequestOptions, RESTDataSource } from 'apollo-datasource-rest';
+import { ApolloError } from 'apollo-server';
 import { Album, Data } from '../../../models';
 
 export class AlbumAPI extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = process.env.ALBUMS;
+    this.baseURL = process.env.ALBUMS || 'http://localhost:3002/v1/artists';
+  }
+
+  willSendRequest(req: RequestOptions) {
+    req.headers.set('Authorization', this.context.token);
   }
 
   async getAlbums() {
@@ -13,7 +18,10 @@ export class AlbumAPI extends RESTDataSource {
       const data: Data<Album> = await this.get('');
       return data.items;
     } catch (err) {
-      console.error(err);
+      if (err) {
+        const message = (err as ApolloError).extensions.response.statusText;
+        process.stdout.write(message);
+      }
     }
   }
 
@@ -22,7 +30,44 @@ export class AlbumAPI extends RESTDataSource {
       const data: Album = await this.get(`/${albumId}`);
       return data;
     } catch (err) {
-      console.error(err);
+      if (err) {
+        const message = (err as ApolloError).extensions.response.statusText;
+        process.stdout.write(message);
+      }
+    }
+  }
+
+  async createAlbum(body: Album | undefined) {
+    try {
+      const data = await this.post('', body);
+      return data;
+    } catch (err) {
+      if (err) {
+        const message = (err as ApolloError).extensions.response.statusText;
+        process.stdout.write(message);
+      }
+    }
+  }
+
+  async updateAlbum(albumId: string, body: Album | undefined) {
+    try {
+      return await this.put(`/${albumId}`, body);
+    } catch (err) {
+      if (err) {
+        const message = (err as ApolloError).extensions.response.statusText;
+        process.stdout.write(message);
+      }
+    }
+  }
+
+  async deleteAlbum(albumId: string) {
+    try {
+      return await this.delete(`${encodeURIComponent(albumId)}`);
+    } catch (err) {
+      if (err) {
+        const message = (err as ApolloError).extensions.response.statusText;
+        process.stdout.write(message);
+      }
     }
   }
 }

@@ -8,8 +8,7 @@ export const typeUsers = gql`
   type User {
     id: ID!
     firstName: String
-    secondName: String
-    middleName: String
+    lastName: String
     password: String!
     email: String!
   }
@@ -17,5 +16,9 @@ export const typeUsers = gql`
   type Query {
     user(id: ID!): User
     jwt(email: String!, password: String!): JWT
+  }
+
+  type Mutation {
+    register(firstName: String!, lastName: String!, password: String!, email: String!): User
   }
 `;

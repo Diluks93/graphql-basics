@@ -1,5 +1,6 @@
 export interface Artist {
   _id: string;
+  id?: string;
   firstName: string;
   secondName: string;
   middleName: string;

@@ -13,4 +13,15 @@ export const resolversBands = {
   Band: {
     id: (parent: Band) => parent._id,
   },
+  Mutation: {
+    createBand: async (_: undefined, body: Band, { dataSources }: any) => {
+      return await dataSources.bandAPI.createBand(body);
+    },
+    updateBand: async (_: undefined, body: Band, { dataSources }: any) => {
+      return await dataSources.bandAPI.updateBand(body.id, body);
+    },
+    deleteBand: async (_: undefined, { id }: Band, { dataSources }: any) => {
+      return await dataSources.bandAPI.deleteBand(id);
+    },
+  },
 };
