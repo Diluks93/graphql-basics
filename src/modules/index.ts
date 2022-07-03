@@ -1,5 +1,4 @@
 import { gql } from 'apollo-server';
-import { GraphQLScalarType, Kind } from 'graphql';
 import { resolversArtists, typeArtists } from './artists';
 import { resolversBands, typeBands } from './bands';
 import { typeGenres, resolversGenre } from './genres';
@@ -8,29 +7,6 @@ import { typeUsers, resolversUser } from './users';
 import { typeFavourites } from './favourites';
 import { typeAlbums, resolversAlbum } from './albums';
 
-const dateScalar = new GraphQLScalarType({
-  name: 'Date',
-  description: 'Date custom scalar type',
-  serialize(value) {
-    return (value as Date).getTime();
-  },
-  parseValue(value) {
-    return new Date(value as Date);
-  },
-  parseLiteral(ast) {
-    if (ast.kind === Kind.INT) {
-      return new Date(
-        parseInt(ast.value, 10),
-      );
-    }
-    return null;
-  },
-});
-
-const dataResolver = {
-  Date: dateScalar,
-};
-
 export const resolver = [
   resolversGenre,
   resolversAlbum,
@@ -38,7 +14,6 @@ export const resolver = [
   resolversBands,
   resolversTracks,
   resolversUser,
-  dataResolver,
 ];
 
 export const schema = gql`

@@ -6,7 +6,10 @@ import {
   resolver, schema, GenreAPI, AlbumAPI, ArtistAPI, BandsAPI, TrackAPI, UserAPI,
 } from './modules';
 
-const startApolloServer = async (typeDefs: typeof schema, resolvers: any): Promise<void> => {
+const startApolloServer = async (
+  typeDefs: typeof schema,
+  resolvers: typeof resolver,
+): Promise<void> => {
   const PORT = process.env.PORT || 4000;
   const server = new ApolloServer({
     typeDefs,
