@@ -14,7 +14,7 @@
 
 ## Usage
 
-  1. `npm run dev` - to run in development mode
+  1. `npm run dev` - to run in development mode or `npm start` - to run in production mode
   2. you should see the following message on your terminal:
 
     🚀 Server ready at http://localhost:3000/

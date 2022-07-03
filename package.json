@@ -5,7 +5,9 @@
   "scripts": {
     "start:dev": "ts-node ./src/server.ts",
     "dev": "nodemon ./src/server.ts -w",
-    "lint": "eslint . --ext .ts --fix"
+    "lint": "eslint . --ext .ts --fix",
+    "build": "tsc",
+    "start": "npm run build && node ./dist/server.js"
   },
   "repository": {
     "type": "git",
