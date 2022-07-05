@@ -4,7 +4,7 @@ import { resolversBands, typeBands } from './bands';
 import { typeGenres, resolversGenre } from './genres';
 import { resolversTracks, typeTracks } from './tracks';
 import { typeUsers, resolversUser } from './users';
-import { typeFavourites } from './favourites';
+import { typeFavourites, resolversFavorites } from './favourites';
 import { typeAlbums, resolversAlbum } from './albums';
 
 export const resolver = [
@@ -14,12 +14,13 @@ export const resolver = [
   resolversBands,
   resolversTracks,
   resolversUser,
+  resolversFavorites,
 ];
 
 export const schema = gql`
   ${typeArtists}
-  ${typeBands}
   ${typeGenres}
+  ${typeBands}
   ${typeTracks}
   ${typeUsers}
   ${typeFavourites}
@@ -31,3 +32,4 @@ export { ArtistAPI } from './artists';
 export { BandsAPI } from './bands';
 export { TrackAPI } from './tracks';
 export { UserAPI } from './users';
+export { FavouritesAPI } from './favourites';

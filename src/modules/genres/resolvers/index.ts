@@ -1,12 +1,14 @@
+import { Context } from 'apollo-server-core';
+import { Body } from 'apollo-datasource-rest/dist/RESTDataSource';
+import { DataSources } from '../../../models/data.models';
 import { Genre } from '../../../models';
 
 export const resolversGenre = {
   Query: {
-    genres: async (_: undefined, __: Genre, { dataSources }: any) => {
-      return await dataSources.genreAPI.getGenres();
+    async genres(_parent: Genre, { limit, offset }: Body & { limit: number, offset: number }, { dataSources }: Context<DataSources>) {
+      return await dataSources.genreAPI.getGenres(limit, offset);
     },
-
-    genre: async (_: undefined, { id }: Genre, { dataSources }: any) => {
+    async genre(_parent: Genre, { id }: Body & { id: string }, { dataSources }: Context<DataSources>) {
       return await dataSources.genreAPI.getGenre(id);
     },
   },
@@ -14,14 +16,14 @@ export const resolversGenre = {
     id: (parent: Genre) => parent._id,
   },
   Mutation: {
-    createGenre: async (_: undefined, body: Genre, { dataSources }: any) => {
+    createGenre: async (_parent: Genre, body: Genre, { dataSources }: Context<DataSources>) => {
       return await dataSources.genreAPI.createGenre(body);
     },
-    updateGenre: async (_: undefined, body: Genre, { dataSources }: any) => {
-      return await dataSources.genreAPI.updateGenre(body.id, body);
+    updateGenre: async (_parent: Genre, body: Genre, { dataSources }: Context<DataSources>) => {
+      return await dataSources.genreAPI.updateGenre(body.id as string, body);
     },
-    deleteGenre: async (_: undefined, { id }: Genre, { dataSources }: any) => {
-      return await dataSources.genreAPI.deleteGenre(id);
+    deleteGenre: async (_parent: Genre, { id }: Genre, { dataSources }: Context<DataSources>) => {
+      return await dataSources.genreAPI.deleteGenre(id as string);
     },
   },
 };

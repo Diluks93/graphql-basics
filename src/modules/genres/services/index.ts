@@ -13,10 +13,13 @@ export class GenreAPI extends RESTDataSource {
     req.headers.set('Authorization', this.context.token);
   }
 
-  async getGenres() {
+  async getGenres(limit = 5, offset = 0) {
     try {
-      const data: Data<Genre> = await this.get('');
-      return data.items;
+      const data: Data<Genre> = await this.get('', {
+        limit,
+        offset,
+      });
+      return data;
     } catch (err) {
       if (err) {
         const message = (err as ApolloError).extensions.response.statusText;

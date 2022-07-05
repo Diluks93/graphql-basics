@@ -1,11 +1,9 @@
 import { gql } from 'apollo-server';
 
 export const typeGenres = gql`
-  input GenreInput {
-    name: String
-    description: String
-    country: String
-    year: Int
+  "This Genres type is supported to fields for parameters."
+  type Genres {
+    items: [Genre!]
   }
   
   "This Genre type defines the queryable fields for every genre in our data source."
@@ -24,7 +22,7 @@ export const typeGenres = gql`
 
   extend type Query {
     "You can GET a list of genre."
-    genres(limit: Int, offset: Int): [Genre]
+    genres(offset: Int, limit: Int): Genres
     "You can GET genre by ID."
     genre(id: ID!): Genre
   }

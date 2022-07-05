@@ -1,27 +1,33 @@
-import { Band } from '../../../models';
+import { Context } from 'apollo-server-core';
+import { Body } from 'apollo-datasource-rest/dist/RESTDataSource';
+import { DataSources } from '../../../models/data.models';
+import { Band, Data, Genre } from '../../../models';
 
 export const resolversBands = {
   Query: {
-    bands: async (_: undefined, __: Record<string, never>, { dataSources }: any) => {
-      return await dataSources.bandAPI.getBands();
+    async bands(_parent: Band, { limit, offset }: Body & { limit: number, offset: number }, { dataSources }: Context<DataSources>) {
+      return await dataSources.bandAPI.getBands(limit, offset);
     },
-
-    band: async (_: undefined, { id }: Record<string, never>, { dataSources }: any) => {
+    async band(_parent: Band, { id }: Body & { id: string }, { dataSources }: Context<DataSources>) {
       return await dataSources.bandAPI.getBand(id);
     },
   },
   Band: {
     id: (parent: Band) => parent._id,
+    async genres(parent: Band, _body: Body, { dataSources }: Context<DataSources>) {
+      const data: Data<Genre> | undefined = await dataSources.genreAPI.getGenres();
+      return data?.items.filter((item) => parent.genresIds.includes(item._id));
+    },
   },
   Mutation: {
-    createBand: async (_: undefined, body: Band, { dataSources }: any) => {
+    createBand: async (_parent: Band, body: Band, { dataSources }: Context<DataSources>) => {
       return await dataSources.bandAPI.createBand(body);
     },
-    updateBand: async (_: undefined, body: Band, { dataSources }: any) => {
-      return await dataSources.bandAPI.updateBand(body.id, body);
+    updateBand: async (_parent: Band, body: Band, { dataSources }: Context<DataSources>) => {
+      return await dataSources.bandAPI.updateBand(body.id as string, body);
     },
-    deleteBand: async (_: undefined, { id }: Band, { dataSources }: any) => {
-      return await dataSources.bandAPI.deleteBand(id);
+    deleteBand: async (_parent: Band, { id }: Band, { dataSources }: Context<DataSources>) => {
+      return await dataSources.bandAPI.deleteBand(id as string);
     },
   },
 };

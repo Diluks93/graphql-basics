@@ -1,8 +1,6 @@
 import { gql } from 'apollo-server';
 
 export const typeFavourites = gql`
-  union Favorite = Artist | Band | Genre | Track | Album
-
   type Favourites {
     id: ID!
     userId: ID!
@@ -13,6 +11,6 @@ export const typeFavourites = gql`
   }
 
   extend type Query {
-    favourites(id: ID!): [Favorite]
+    favourites: Favourites
   }
 `;

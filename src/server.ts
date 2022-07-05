@@ -3,7 +3,7 @@ import { ApolloServer } from 'apollo-server';
 import { EOL } from 'node:os';
 
 import {
-  resolver, schema, GenreAPI, AlbumAPI, ArtistAPI, BandsAPI, TrackAPI, UserAPI,
+  resolver, schema, GenreAPI, AlbumAPI, ArtistAPI, BandsAPI, TrackAPI, UserAPI, FavouritesAPI,
 } from './modules';
 
 const startApolloServer = async (
@@ -24,6 +24,7 @@ const startApolloServer = async (
         bandAPI: new BandsAPI(),
         trackAPI: new TrackAPI(),
         userAPI: new UserAPI(),
+        favoritesAPI: new FavouritesAPI(),
       };
     },
     context: ({ req }) => {

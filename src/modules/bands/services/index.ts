@@ -1,22 +1,24 @@
 import 'dotenv/config';
 import { RequestOptions, RESTDataSource } from 'apollo-datasource-rest';
 import { ApolloError } from 'apollo-server';
-import { Band, Data } from '../../../models';
+import { Band } from '../../../models';
 
 export class BandsAPI extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = process.env.BANDS;
+    this.baseURL = process.env.BANDS || 'http://localhost:3003/v1/bands';
   }
 
   willSendRequest(req: RequestOptions) {
     req.headers.set('Authorization', this.context.token);
   }
 
-  async getBands() {
+  async getBands(limit = 5, offset = 0) {
     try {
-      const data: Data<Band> = await this.get('');
-      return data.items;
+      return await this.get('', {
+        limit,
+        offset,
+      });
     } catch (err) {
       if (err) {
         const message = (err as ApolloError).extensions.response.statusText;

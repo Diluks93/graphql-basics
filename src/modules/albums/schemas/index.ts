@@ -1,14 +1,10 @@
 import { gql } from 'apollo-server';
 
 export const typeAlbums = gql`
-  input AlbumInput {
-    name: String
-    released: Int
-    artists: [ArtistInput]
-    bands: [BandInput]
-    tracks: [TrackInput]
-    genres: [GenreInput]
-    image: String
+  "This Albums type is supported to fields for parameters."
+  type Albums {
+    "List of items by type"
+    items: [Album!]
   }
 
   "This Album type defines the queryable fields for every album in our data source."
@@ -33,16 +29,16 @@ export const typeAlbums = gql`
 
   extend type Query {
     "You can GET a list of albums."
-    albums(limit: Int, offset: Int): [Album]
+    albums(limit: Int, offset: Int): Albums
     "You can GET an album by ID."
     album(id: ID!): Album
   }
 
   extend type Mutation {
     "You can create a new album."
-    createAlbum(name: String, released: Int, artist: [ArtistInput], bands: [BandInput], tracks: [TrackInput], genres: [GenreInput], image: String): Album
+    createAlbum(name: String!, released: Int, artistsIds: [ID!], bandsIds: [ID!], tracksIds: [ID!], genresIds: [ID!], image: String): Album
     "You can change a album by id ID in your database."
-    updateAlbum(id: ID!, name: String, released: Int, artist: [ArtistInput], bands: [BandInput], tracks: [TrackInput], genres: [GenreInput], image: String): Album
+    updateAlbum(id: ID!, name: String!, released: Int, artistsIds: [ID!], bandsIds: [ID!], tracksIds: [ID!], genresIds: [ID!], image: String): Album
     "You can remove a album by ID from your your database."
     deleteAlbum(id: ID!): Delete
   }

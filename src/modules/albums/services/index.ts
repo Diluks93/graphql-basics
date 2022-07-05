@@ -13,10 +13,12 @@ export class AlbumAPI extends RESTDataSource {
     req.headers.set('Authorization', this.context.token);
   }
 
-  async getAlbums() {
+  async getAlbums(limit = 5, offset = 0) {
     try {
-      const data: Data<Album> = await this.get('');
-      return data.items;
+      const data: Data<Album> = await this.get('', {
+        limit, offset,
+      });
+      return data;
     } catch (err) {
       if (err) {
         const message = (err as ApolloError).extensions.response.statusText;
