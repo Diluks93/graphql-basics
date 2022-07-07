@@ -36,9 +36,9 @@ export const typeAlbums = gql`
 
   extend type Mutation {
     "You can create a new album."
-    createAlbum(name: String!, released: Int, artistsIds: [ID!], bandsIds: [ID!], tracksIds: [ID!], genresIds: [ID!], image: String): Album
+    createAlbum(name: String!, released: Int, artistsIds: [ID], bandsIds: [ID], tracksIds: [ID], genresIds: [ID], image: String): Album
     "You can change a album by id ID in your database."
-    updateAlbum(id: ID!, name: String!, released: Int, artistsIds: [ID!], bandsIds: [ID!], tracksIds: [ID!], genresIds: [ID!], image: String): Album
+    updateAlbum(id: ID!, name: String!, released: Int, artistsIds: [ID], bandsIds: [ID], tracksIds: [ID], genresIds: [ID], image: String): Album
     "You can remove a album by ID from your your database."
     deleteAlbum(id: ID!): Delete
   }

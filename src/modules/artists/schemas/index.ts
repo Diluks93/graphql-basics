@@ -38,9 +38,9 @@ export const typeArtists = gql`
 
   extend type Mutation {
     "You can create a new artist. Attention! firstName, secondName, country is required fields."
-    createArtist(firstName: String!, secondName: String!, middleName: String, birthDate: String, birthPlace: String, country: String!, bandsIds: [ID!], instruments: [String]): Artist
+    createArtist(firstName: String!, secondName: String!, middleName: String, birthDate: String, birthPlace: String, country: String!, bandsIds: [ID], instruments: [String]): Artist
     "You can update an artist by ID in your database. Attention! firstName, secondName, country is required fields."
-    updateArtist(id: ID!, firstName: String!, secondName: String!, middleName: String, birthDate: String, birthPlace: String, country: String!, bandsIds: [ID!], instruments: [String]): Artist
+    updateArtist(id: ID!, firstName: String!, secondName: String!, middleName: String, birthDate: String, birthPlace: String, country: String!, bandsIds: [ID], instruments: [String]): Artist
     "You can remove an artist by ID from your database."
     deleteArtist(id: ID!): Delete
   }

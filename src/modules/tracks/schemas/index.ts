@@ -35,9 +35,9 @@ export const typeTracks = gql`
 
   extend type Mutation {
     "You can create a new Track. Attention! title is required field."
-    createTrack(title: String!, albumIds: [ID!], bandsIds: [ID!], duration: Int, released: Int, genresIds: [ID!]): Track
+    createTrack(title: String!, albumIds: [ID], bandsIds: [ID], duration: Int, released: Int, genresIds: [ID]): Track
     "You can update your track by ID in your database."
-    updateTrack(id: ID!, title: String!, albumIds: [ID!], bandsIds: [ID!], duration: Int, released: Int, genresIds: [ID!]): Track
+    updateTrack(id: ID!, title: String!, albumIds: [ID], bandsIds: [ID], duration: Int, released: Int, genresIds: [ID]): Track
     "You can remove your track by ID from your database."
     deleteTrack(id: ID!): Delete
   }

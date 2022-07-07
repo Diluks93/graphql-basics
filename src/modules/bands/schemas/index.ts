@@ -26,7 +26,7 @@ export const typeBands = gql`
   input MemberInput {
     artist: String
     instruments: String
-    years: String
+    years: [String]
   }
 
   "This Member type contains the name artist, instruments and released years."
@@ -48,9 +48,9 @@ export const typeBands = gql`
 
   extend type Mutation {
     "You can create a new band."
-    createBand(name: String, origin: String, members: [MemberInput], website: String, genresIds: [ID!] ): Band
+    createBand(name: String, origin: String, members: [MemberInput], website: String, genresIds: [ID] ): Band
     "You can update a band by ID in your database."
-    updateBand(id: ID!, name: String, origin: String, members: [MemberInput], website: String, genresIds: [ID!]): Band
+    updateBand(id: ID!, name: String, origin: String, members: [MemberInput], website: String, genresIds: [ID]): Band
     "You can remove a band by ID from your database."
     deleteBand(id: ID!): Delete
   }
